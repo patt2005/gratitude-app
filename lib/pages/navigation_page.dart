@@ -1,6 +1,6 @@
-import 'package:daily_gratitude_app/pages/home_page.dart';
-import 'package:daily_gratitude_app/pages/settings_page.dart';
-import 'package:daily_gratitude_app/utilities/utils.dart';
+import 'package:gratitude_app/pages/home_page.dart';
+import 'package:gratitude_app/pages/settings_page.dart';
+import 'package:gratitude_app/utilities/utils.dart';
 import 'package:flutter/material.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -12,7 +12,7 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
-    const HomePage(),
+    HomePage(),
     const SettingsPage(),
   ];
   int _selectedPageIndex = 0;

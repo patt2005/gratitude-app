@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:daily_gratitude_app/models/post.dart';
-import 'package:daily_gratitude_app/models/quote.dart';
-import 'package:daily_gratitude_app/services/api_service.dart';
+import 'package:gratitude_app/models/post.dart';
+import 'package:gratitude_app/models/quote.dart';
+import 'package:gratitude_app/services/api_service.dart';
 
 class JournalService extends ChangeNotifier {
   Quote _quote = Quote(text: "", author: "");

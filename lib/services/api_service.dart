@@ -1,4 +1,4 @@
-import 'package:daily_gratitude_app/models/quote.dart';
+import 'package:gratitude_app/models/quote.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {

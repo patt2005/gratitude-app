@@ -1,5 +1,5 @@
-import 'package:daily_gratitude_app/models/post.dart';
-import 'package:daily_gratitude_app/utilities/utils.dart';
+import 'package:gratitude_app/models/post.dart';
+import 'package:gratitude_app/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';

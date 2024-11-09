@@ -1,5 +1,5 @@
-import 'package:daily_gratitude_app/pages/navigation_page.dart';
-import 'package:daily_gratitude_app/utilities/utils.dart';
+import 'package:gratitude_app/pages/navigation_page.dart';
+import 'package:gratitude_app/utilities/utils.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatelessWidget {

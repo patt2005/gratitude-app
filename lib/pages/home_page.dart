@@ -1,16 +1,31 @@
-import 'package:daily_gratitude_app/models/quote.dart';
-import 'package:daily_gratitude_app/pages/post_page.dart';
-import 'package:daily_gratitude_app/pages/posts_page.dart';
-import 'package:daily_gratitude_app/services/journal_service.dart';
-import 'package:daily_gratitude_app/utilities/utils.dart';
-import 'package:daily_gratitude_app/widgets/post_widget.dart';
+import 'package:gratitude_app/models/quote.dart';
+import 'package:gratitude_app/pages/post_page.dart';
+import 'package:gratitude_app/pages/posts_page.dart';
+import 'package:gratitude_app/services/journal_service.dart';
+import 'package:gratitude_app/utilities/utils.dart';
+import 'package:gratitude_app/widgets/post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
-  Widget _buildQuoteContainer(Quote quote) {
+  final List<String> dailyChallenges = [
+    "Write about someone who made you smile recently.",
+    "What is one thing you're grateful for in your home?",
+    "Describe a recent meal you truly enjoyed.",
+    "Write about a challenge you're grateful you overcame.",
+    "Name one person who has supported you this week.",
+    "Describe a simple pleasure you enjoyed today.",
+    "What is a piece of advice you're thankful for?",
+  ];
+
+  String getDailyChallenge() {
+    final today = DateTime.now();
+    return dailyChallenges[today.weekday % dailyChallenges.length];
+  }
+
+  Widget _buildQuoteContainer(Quote quote, Function refreshQuote) {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -44,14 +59,48 @@ class HomePage extends StatelessWidget {
               color: Colors.black54,
             ),
           ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => refreshQuote(),
+            child: const Text("Refresh Quote"),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildPostActions(BuildContext context, String postText) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          onPressed: () {
+            final snackBar = SnackBar(
+              content: Text('You can share: "$postText"'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Post deleted')),
+            );
+          },
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final JournalService journalService = Provider.of<JournalService>(context);
+
+    void refreshQuote() async {
+      await journalService.getQuote();
+    }
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
@@ -120,7 +169,8 @@ class HomePage extends StatelessWidget {
                       future: journalService.getQuote(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          return _buildQuoteContainer(journalService.quote);
+                          return _buildQuoteContainer(
+                              journalService.quote, refreshQuote);
                         } else {
                           return const Center(
                             child: CircularProgressIndicator(),
@@ -128,7 +178,40 @@ class HomePage extends StatelessWidget {
                         }
                       },
                     )
-                  : _buildQuoteContainer(journalService.quote),
+                  : _buildQuoteContainer(journalService.quote, refreshQuote),
+              SizedBox(height: screenSize.height * 0.03),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 7,
+                      spreadRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Daily Gratitude Challenge",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      getDailyChallenge(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: screenSize.height * 0.03),
               Consumer<JournalService>(
                 builder: (context, value, child) {
@@ -189,15 +272,14 @@ class HomePage extends StatelessWidget {
                   : Padding(
                       padding: EdgeInsets.only(top: screenSize.height * 0.01),
                       child: Column(
-                        children: [
-                          for (int i = 0;
-                              i <
-                                  (journalService.posts.length > 3
-                                      ? 3
-                                      : journalService.posts.length);
-                              i++)
-                            PostWidget(post: journalService.posts[i]),
-                        ],
+                        children: journalService.posts.map((post) {
+                          return Column(
+                            children: [
+                              PostWidget(post: post),
+                              _buildPostActions(context, post.title),
+                            ],
+                          );
+                        }).toList(),
                       ),
                     ),
             ],

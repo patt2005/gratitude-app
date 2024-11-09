@@ -1,6 +1,6 @@
-import 'package:daily_gratitude_app/pages/intro_page.dart';
-import 'package:daily_gratitude_app/services/journal_service.dart';
-import 'package:daily_gratitude_app/utilities/utils.dart';
+import 'package:gratitude_app/pages/intro_page.dart';
+import 'package:gratitude_app/services/journal_service.dart';
+import 'package:gratitude_app/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

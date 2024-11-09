@@ -1,4 +1,4 @@
-# daily_gratitude_app
+# gratitude_app
 
 A new Flutter project.
 
