@@ -276,7 +276,6 @@ class HomePage extends StatelessWidget {
                           return Column(
                             children: [
                               PostWidget(post: post),
-                              _buildPostActions(context, post.title),
                             ],
                           );
                         }).toList(),

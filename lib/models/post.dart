@@ -21,7 +21,7 @@ class Post {
   Map<String, dynamic> toJson() => {
         'title': title,
         'description': description,
-        'icon': icon.index, // Store icon as enum index
+        'icon': icon.index,
         'date': date.toIso8601String(),
         'category': category,
         'color': color.value,

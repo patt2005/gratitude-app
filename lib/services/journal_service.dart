@@ -33,6 +33,11 @@ class JournalService extends ChangeNotifier {
     }
   }
 
+  Future<void> deletePost(Post post) async {
+    _posts.remove(_posts.where((e) => e == post).first);
+    notifyListeners();
+  }
+
   Future<void> loadPosts() async {
     try {
       List<String> postStrings = _sessionStorage['journal_posts'] ?? <String>[];

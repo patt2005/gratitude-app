@@ -87,18 +87,6 @@ class SettingsPage extends StatelessWidget {
             padding: EdgeInsets.only(left: 55),
             child: Divider(color: Colors.black38),
           ),
-          ListTile(
-            onTap: () => _launchUrl("https://your-apps-url.com"),
-            leading: const Icon(
-              FontAwesomeIcons.googlePlay,
-              color: Color.fromARGB(255, 248, 168, 183),
-            ),
-            title: const Text("Our Apps"),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 55),
-            child: Divider(color: Colors.black38),
-          ),
         ],
       ),
     );
