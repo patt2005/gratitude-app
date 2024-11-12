@@ -69,31 +69,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildPostActions(BuildContext context, String postText) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          icon: const Icon(Icons.share),
-          onPressed: () {
-            final snackBar = SnackBar(
-              content: Text('You can share: "$postText"'),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Post deleted')),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final JournalService journalService = Provider.of<JournalService>(context);

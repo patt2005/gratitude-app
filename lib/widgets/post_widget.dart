@@ -122,7 +122,6 @@ class PostWidget extends StatelessWidget {
               ),
             ),
             const Divider(height: 1, color: Colors.grey),
-            // Actions: Share and Delete
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
@@ -130,7 +129,16 @@ class PostWidget extends StatelessWidget {
                 children: [
                   TextButton.icon(
                     onPressed: () async {
-                      await Share.share("${post.title}\n${post.description}");
+                      try {
+                        final box = context.findRenderObject() as RenderBox?;
+                        await Share.share(
+                          "${post.title}\n${post.description}",
+                          sharePositionOrigin:
+                              box!.localToGlobal(Offset.zero) & box.size,
+                        );
+                      } catch (e) {
+                        debugPrint("Error while sharing: $e");
+                      }
                     },
                     icon: const Icon(CupertinoIcons.share,
                         color: Colors.blueAccent),
